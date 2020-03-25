@@ -82,7 +82,7 @@ class SinglyLinkedList {
   }
   insert(index, val) {
     if (index < 0 || index > this.length) return false;
-    if (index === this.length) return !!this.push(val);
+    if (index === this.length) return !!this.push(val); //!! ensures it turns a true or false value;
     if (index === 0) return !!this.unshift(val);
     let newNode = new Node(val);
     let prev = this.get(index - 1);
@@ -92,10 +92,23 @@ class SinglyLinkedList {
     this.length++;
     return true;
   }
+  remove(index) {
+    if (index < 0 || index >= this.length) return undefined; //check index validity
+    if (index === this.length - 1) return this.pop();
+    if (index === 0) return this.shift();
+    let previousNode = this.get(index - 1);
+    let removed = previousNode.next; // what is being returned
+    previousNode.next = removed.next;
+    this.length--;
+    return removed;
+  }
 }
 
 let list = new SinglyLinkedList();
 list.push('hello');
 list.push('GOODBYE');
 list.push('!');
+list.push('rock');
+list.push('the');
+list.push('boat');
 console.log(list);

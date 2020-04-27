@@ -295,39 +295,157 @@ class Stack {
   }
 }
 
+// class Node {
+//   constructor(value) {
+//     this.value = value;
+//     this.next = null;
+//   }
+// }
+// class Queue {
+//   constructor() {
+//     this.first = null;
+//     this.last = null;
+//     this.size = 0;
+//   }
+//   enqueue(val) {
+//     //adds to end
+//     let newNode = new Node(val);
+//     if (!this.first) {
+//       this.first = newNode;
+//       this.last = newNode;
+//     } else {
+//       this.last.next = newNode;
+//       this.last = newNode;
+//     }
+//     return ++this.size;
+//   }
+//   dequeue() {
+//     //removes from start
+//     if (!this.first) return null;
+//     let temp = this.first;
+//     if (this.first === this.last) {
+//       return (this.last = null);
+//     }
+//     this.first = this.first.next;
+//     this.size--;
+//     return temp.value;
+//   }
+// }
+
 class Node {
   constructor(value) {
     this.value = value;
-    this.next = null;
+    this.left = null;
+    this.right = null;
   }
 }
-class Queue {
+
+class BinarySearchTree {
   constructor() {
-    this.first = null;
-    this.last = null;
-    this.size = 0;
+    this.root = null;
   }
-  enqueue(val) {
-    //adds to end
-    let newNode = new Node(val);
-    if (!this.first) {
-      this.first = newNode;
-      this.last = newNode;
+  insert(value) {
+    newNode = Node(value);
+    if (this.root === null) {
+      this.root = newNode;
+      return this;
     } else {
-      this.last.next = newNode;
-      this.last = newNode;
+      current = this.root;
+      while (true) {
+        if (value < current.value) {
+          if (current.left === null) {
+            current.left = newnode;
+            return this;
+          } else {
+            current = current.left;
+          }
+        } else if (value > current.value) {
+          if (current.right === null) {
+            current.right = newNode;
+            return this;
+          } else {
+            current = current.right;
+          }
+        }
+      }
     }
-    return ++this.size;
   }
-  dequeue() {
-    //removes from start
-    if (!this.first) return null;
-    let temp = this.first;
-    if (this.first === this.last) {
-      return (this.last = null);
+  find(value) {
+    if (this.root === null) return false;
+    let current = this.root;
+    let found = false;
+    while (!found && current) {
+      //makes sure it doesn't loop unnecessarily when found
+      if (value < current.value) {
+        current = current.left;
+      } else if (value > current.value) {
+        current = current.right;
+      } else {
+        return true;
+      }
     }
-    this.first = this.first.next;
-    this.size--;
-    return temp.value;
+    return false;
   }
 }
+
+class BinaryHeap {
+  constructor() {
+    this.values = [];
+  }
+  insert(element) {
+    this.values.push(element);
+    this.bubbleUp();
+  }
+  bubbleUp() {
+    let index = this.values.length - 1;
+    const element = this.values[index];
+    while (index > 0) {
+      let parentIdx = Math.floor((index - 1) / 2);
+      let parent = this.values[parentIdx];
+      if (element <= parent) break;
+      this.values[parentIdx] = element;
+      this.values[index] = parent;
+      index = parentIdx;
+    }
+  }
+  extractMax() {
+    const max = this.values[0];
+    const end = this.values.pop();
+    if (this.values.length > 0) {
+      this.values[0] = end;
+      this.sinkDown();
+    }
+
+    return max;
+  }
+  sinkDown() {
+    let idx = 0;
+    const length = this.values.length;
+    const element = this.values[0];
+    while (true) {
+      let leftChildIdx = 2 * idx + 1;
+      let rightChildIdx = 2 * idx + 2;
+      let swap = null;
+      if (leftChildIdx < length) {
+        leftChild = this.values[leftChildIdx];
+        if (leftChild > element) {
+          swap = leftChildIdx; //keeps track of what index to swap it to
+        }
+        if (rightChildIdx > length) {
+          rightChild = this.values[rightChildIdx];
+          if (
+            (swap === null && rightChild > element) ||
+            (swap !== null && rightChild > leftChild)
+          ) {
+            swap = rightChildIdx;
+          }
+        }
+      }
+      if (swap === null) break; //if there's no left or right child, swap will stay null and it breaks out
+      this.values[idx] = this.values[swap];
+      this.values[swap] = element;
+      idx = swap;
+    }
+  }
+}
+let heap = new BinaryHeap();

@@ -31,14 +31,27 @@
 #     return newArr
 
 
-def quicksort(array):
-    if len(array) < 2:
-        return array  # base case- arrays with length lower than 2 are sorted
+# def quicksort(array):
+#     if len(array) < 2:
+#         return array  # base case- arrays with length lower than 2 are sorted
+#     else:
+#         pivot = array[0]
+#         less = [i for i in array[1:] if i <= pivot]
+#         greater = [i for i in array[1:] if i > pivot]
+#         return quicksort(less) + [pivot] + quicksort(greater)
+
+
+# quicksort([8, 1, 9, 6])
+
+cache = {}
+
+# example of how websites cache
+
+
+def get_page(URL):
+    if cache.get(URL):
+        return cache[url]
     else:
-        pivot = array[0]
-        less = [i for i in array[1:] if i <= pivot]
-        greater = [i for i in array[1:] if i > pivot]
-        return quicksort(less) + [pivot] + quicksort(greater)
-
-
-quicksort([8, 1, 9, 6])
+        data = get_data_from_server(url)
+        cache[url] = data
+        return data

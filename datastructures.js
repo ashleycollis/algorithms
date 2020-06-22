@@ -340,54 +340,6 @@ class Node {
   }
 }
 
-class BinarySearchTree {
-  constructor() {
-    this.root = null;
-  }
-  insert(value) {
-    newNode = Node(value);
-    if (this.root === null) {
-      this.root = newNode;
-      return this;
-    } else {
-      current = this.root;
-      while (true) {
-        if (value < current.value) {
-          if (current.left === null) {
-            current.left = newnode;
-            return this;
-          } else {
-            current = current.left;
-          }
-        } else if (value > current.value) {
-          if (current.right === null) {
-            current.right = newNode;
-            return this;
-          } else {
-            current = current.right;
-          }
-        }
-      }
-    }
-  }
-  find(value) {
-    if (this.root === null) return false;
-    let current = this.root;
-    let found = false;
-    while (!found && current) {
-      //makes sure it doesn't loop unnecessarily when found
-      if (value < current.value) {
-        current = current.left;
-      } else if (value > current.value) {
-        current = current.right;
-      } else {
-        return true;
-      }
-    }
-    return false;
-  }
-}
-
 class BinaryHeap {
   constructor() {
     this.values = [];
